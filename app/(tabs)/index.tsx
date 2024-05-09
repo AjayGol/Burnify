@@ -5,8 +5,8 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
-import {useNavigation} from "@react-navigation/native";
-import FontAwesomeIcons from '@expo/vector-icons/FontAwesome'
+import { useNavigation } from '@react-navigation/native';
+import FontAwesomeIcons from '@expo/vector-icons/FontAwesome';
 
 export default function HomeScreen() {
     const navigation = useNavigation();
@@ -77,8 +77,9 @@ export default function HomeScreen() {
 
                 <View style={{ flexDirection: 'column' }}>
                     <Text style={styles.listBodyHeading}>{item?.heading}</Text>
-                    <Text style={styles.listBodyDesc}>
-                        {item?.price} {item?.desc}
+                    <Text style={styles.listBodyPrice}>
+                        {item?.price}
+                        <Text style={styles.listBodyDesc}> {item?.desc}</Text>
                     </Text>
 
                     <View style={{ flexDirection: 'row' }}>
@@ -95,45 +96,44 @@ export default function HomeScreen() {
                 </View>
 
                 <View style={{ flex: 1 }} />
-                <FontAwesomeIcons size={25} name={'edit'} color={'#46C0EF'}/>
-                {/*<Image*/}
-                {/*    source={require('@/assets/images/icon-edit.png')}*/}
-                {/*    style={styles.editIcon}*/}
-                {/*/>*/}
+                <FontAwesomeIcons
+                    size={25}
+                    name={'edit'}
+                    color={'#46C0EF'}
+                    style={styles.editIcon}
+                />
             </View>
         );
     };
 
     return (
         <View style={styles.mainContainer}>
-            <View>
-                {/* Button Design */}
-                <TouchableOpacity style={{ alignItems: 'center' }} onPress={ListItem}>
-                    <View style={styles.listItemButton}>
-                        <Text style={styles.listItemFont}>List an item</Text>
-                    </View>
-                </TouchableOpacity>
+            {/* Button Design */}
+            <TouchableOpacity style={styles.listItemSub} onPress={ListItem}>
+                <View style={styles.listItemButton}>
+                    <Text style={styles.listItemFont}>List an item</Text>
+                </View>
+            </TouchableOpacity>
 
-                {/* Tab Design */}
+            {/* Tab Design */}
 
-                <View style={styles.tabView}>
-                    <View style={styles.tabContainer}>
-                        <Text style={styles.tabTextMain}>9</Text>
-                        <Text style={styles.tabTextName}>Active</Text>
-                        <View style={styles.tabLine} />
-                    </View>
+            <View style={styles.tabView}>
+                <View style={styles.tabContainer}>
+                    <Text style={styles.tabTextMain}>9</Text>
+                    <Text style={styles.tabTextName}>Active</Text>
+                    <View style={styles.tabLine} />
+                </View>
 
-                    <View style={styles.tabContainer}>
-                        <Text style={styles.tabTextMain}>9</Text>
-                        <Text style={styles.tabTextName}>Tasks</Text>
-                        <View style={styles.tabLine} />
-                    </View>
+                <View style={styles.tabContainer}>
+                    <Text style={styles.tabTextMain}>9</Text>
+                    <Text style={styles.tabTextName}>Tasks</Text>
+                    <View style={styles.tabLine} />
+                </View>
 
-                    <View style={styles.tabContainer}>
-                        <Text style={styles.tabTextMain}>9</Text>
-                        <Text style={styles.tabTextName}>Previous</Text>
-                        <View style={styles.tabLine} />
-                    </View>
+                <View style={styles.tabContainer}>
+                    <Text style={styles.tabTextMain}>9</Text>
+                    <Text style={styles.tabTextName}>Previous</Text>
+                    <View style={styles.tabLine} />
                 </View>
             </View>
 
@@ -154,7 +154,12 @@ export default function HomeScreen() {
                         data={data}
                         showsVerticalScrollIndicator={false}
                         renderItem={renderItem}
-                        ListFooterComponent={<View style={{height : 100}}/>}
+                        ListFooterComponent={<View style={{ height: 100 }} />}
+                        ItemSeparatorComponent={() => (
+                            <View style={styles.itemSeparatorComponent}>
+                                <View style={styles.itemSeparatorComponentSub} />
+                            </View>
+                        )}
                     />
                 </View>
             </View>
@@ -165,7 +170,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
-        backgroundColor: '#B7B7B7',
+        backgroundColor: '#E8E8E8',
         marginTop: 50,
     },
     listItemButton: {
@@ -182,10 +187,14 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         color: '#FFFFFF',
     },
+    listItemSub: {
+        alignItems: 'center',
+    },
     tabView: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginHorizontal: 26,
+        marginTop: 10,
     },
     tabContainer: {
         marginBottom: 18,
@@ -211,7 +220,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         borderRadius: 21,
-        marginBottom : 5
+        marginBottom: 5,
     },
     activeHeader: {
         flexDirection: 'row',
@@ -246,6 +255,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 8,
     },
+    listBodyPrice: {
+        fontSize: 15,
+        color: '#000000',
+        fontWeight: '600',
+        paddingHorizontal: 10,
+        marginTop: -10,
+    },
     listBodyDesc: {
         fontSize: 15,
         color: '#000000',
@@ -260,8 +276,8 @@ const styles = StyleSheet.create({
         marginTop: -10,
     },
     editIcon: {
-        height: 20,
-        width: 20,
+        height: 25,
+        width: 25,
         marginTop: 8,
     },
     numberContainer: {
@@ -272,11 +288,21 @@ const styles = StyleSheet.create({
     listBody: {
         flexDirection: 'row',
         marginBottom: 20,
+        marginTop: 20,
     },
     listImages: {
-        height: 110,
+        height: 115,
         width: 84,
         backgroundColor: '#000000',
         borderRadius: 14,
+    },
+    itemSeparatorComponent: {
+        backgroundColor: '#FFFFFF',
+        height: 2,
+    },
+    itemSeparatorComponentSub: {
+        backgroundColor: '#E8E8E8',
+        height: 2,
+        marginHorizontal: 16,
     },
 });
