@@ -19,19 +19,37 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+            <TabBarIcon name={require('@/assets/images/icon-home.png')} focus={focused} />
           ),
         }}
       />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
-          ),
-        }}
-      />
+        <Tabs.Screen
+            name="buying"
+            options={{
+                title: 'Buying',
+                tabBarIcon: ({ color, focused }) => (
+                    <TabBarIcon name={require('@/assets/images/icon-buying.png')} focus={focused} />
+                ),
+            }}
+        />
+        <Tabs.Screen
+            name="selling"
+            options={{
+                title: 'Selling',
+                tabBarIcon: ({ color, focused }) => (
+                    <TabBarIcon name={require('@/assets/images/icon-selling.png')} focus={focused} />
+                ),
+            }}
+        />
+        <Tabs.Screen
+            name="message"
+            options={{
+                title: 'Message',
+                tabBarIcon: ({ color, focused }) => (
+                    <TabBarIcon name={require('@/assets/images/icon-message.png')} focus={focused} />
+                ),
+            }}
+        />
     </Tabs>
   );
 }
