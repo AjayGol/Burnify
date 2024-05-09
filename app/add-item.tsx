@@ -1,5 +1,5 @@
 import {
-  Dimensions,
+  Dimensions, ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -13,6 +13,9 @@ import TitleView from '@/components/Title';
 import { useState } from 'react';
 import { Price } from '@/components/home/Price';
 import ConfirmItem from '@/components/home/ConfirmItem';
+import TitleNew from "@/components/home/TitleNew";
+import Description from "@/components/home/Description";
+import Search from "@/components/home/Search";
 
 export default function AddItemScreen() {
   const navigation = useNavigation();
@@ -79,7 +82,7 @@ export default function AddItemScreen() {
 
   return (
       <>
-        <View style={{ flex: 1, backgroundColor: '#F3F3F3' }}>
+        <ScrollView style={{ flex: 1, backgroundColor: '#F3F3F3' }}>
           <View style={styles.headerContainer}>
             <View style={styles.headerListTitle}>
               <Text style={{ fontSize: 25, fontWeight: '500' }}>
@@ -92,10 +95,13 @@ export default function AddItemScreen() {
           </View>
 
           {renderCamera()}
+          <TitleNew />
+          <Description />
+          <Search />
           {renderCategory()}
           <Price />
           <ConfirmItem onPressListItem={onPressListItem} />
-        </View>
+        </ScrollView>
       </>
   );
 }
