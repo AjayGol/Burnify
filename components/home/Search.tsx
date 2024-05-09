@@ -1,32 +1,35 @@
-import React from 'react';
-import { View, StyleSheet, Text, Switch } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Text, Switch, TouchableOpacity } from 'react-native';
 import TitleView from '@/components/Title';
 
 const Search = () => {
+    const allTabs = ['New', 'Used', 'Not Specified'];
+
+    const [selectedValue, setSelectedValue] = useState('Not Specified');
+
+    const [switches] = useState([
+        { title: 'Allow Local Pickup', enabled: true },
+        { title: 'Allow On All Categories', enabled: true },
+    ]);
+
     return (
         <View style={styles.boxView}>
             <TitleView text={'Searchability'} icon={null} />
 
             <View style={{ marginTop: 15 }}>
-                <View style={styles.switchBox}>
-                    <Text style={styles.switchText}>{'Allow Local Pickup'}</Text>
-                    <Switch
-                        trackColor={{ true: '#9DDAF0' }}
-                        thumbColor={'#3FBFEF'}
-                        ios_backgroundColor="#3e3e3e"
-                        value={true}
-                    />
-                </View>
-
-                <View style={styles.switchBox}>
-                    <Text style={styles.switchText}>{'Allow On All Categories'}</Text>
-                    <Switch
-                        trackColor={{ true: '#9DDAF0' }}
-                        thumbColor={'#3FBFEF'}
-                        ios_backgroundColor="#3e3e3e"
-                        value={true}
-                    />
-                </View>
+                {switches?.map((item, index) => {
+                    return (
+                        <View style={styles.switchBox} key={index}>
+                            <Text style={styles.switchText}>{'Allow Local Pickup'}</Text>
+                            <Switch
+                                trackColor={{ true: '#9DDAF0' }}
+                                thumbColor={item.enabled ? '#3FBFEF' : '#fff'}
+                                ios_backgroundColor="#3e3e3e"
+                                value={item.enabled}
+                            />
+                        </View>
+                    );
+                })}
 
                 <View style={[styles.switchBox, { marginTop: 10 }]}>
                     <Text style={styles.switchText}>{'Maximum Distance'}</Text>
@@ -34,28 +37,8 @@ const Search = () => {
                 </View>
 
                 <View style={styles.sliderView}>
-                    <View
-                        style={{
-                            backgroundColor: '#3FBFEF',
-                            height: 3,
-                            position: 'absolute',
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            top: 0,
-                        }}
-                    />
-                    <View
-                        style={{
-                            backgroundColor: '#E8E8E8',
-                            height: 3,
-                            position: 'absolute',
-                            left: '30%',
-                            right: 0,
-                            bottom: 0,
-                            top: 0,
-                        }}
-                    />
+                    <View style={styles.SliderLineMain} />
+                    <View style={styles.sliderLine} />
                     <View style={styles.sliderDot} />
                 </View>
 
@@ -63,17 +46,25 @@ const Search = () => {
                     <Text style={styles.switchText}>{'Condition'}</Text>
 
                     <View style={styles.tabsContainer}>
-                        <View style={styles.tab}>
-                            <Text style={styles.tabText}>{'New'}</Text>
-                        </View>
-
-                        <View style={styles.tab}>
-                            <Text style={styles.tabText}>{'Used'}</Text>
-                        </View>
-
-                        <View style={[styles.tab, { backgroundColor: '#26BCF2' }]}>
-                            <Text style={styles.tabText}>{'Not Specified'}</Text>
-                        </View>
+                        {allTabs?.map(tab => {
+                            return (
+                                <TouchableOpacity
+                                    style={[
+                                        styles.tab,
+                                        {
+                                            backgroundColor:
+                                                tab === selectedValue ? '#26BCF2' : '#DBDBDB',
+                                        },
+                                    ]}
+                                    key={tab}
+                                    onPress={() => {
+                                        setSelectedValue(tab);
+                                    }}
+                                    activeOpacity={0.5}>
+                                    <Text style={styles.tabText}>{tab}</Text>
+                                </TouchableOpacity>
+                            );
+                        })}
                     </View>
                 </View>
             </View>
@@ -114,7 +105,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#3FBFEF',
         borderRadius: 11,
     },
-
     tabsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -129,6 +119,24 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         fontSize: 18,
+    },
+    sliderLine: {
+        backgroundColor: '#E8E8E8',
+        height: 3,
+        position: 'absolute',
+        left: '30%',
+        right: 0,
+        bottom: 0,
+        top: 0,
+    },
+    SliderLineMain: {
+        backgroundColor: '#3FBFEF',
+        height: 3,
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        top: 0,
     },
 });
 

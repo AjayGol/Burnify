@@ -1,5 +1,7 @@
 import {
-  Dimensions, ScrollView,
+  Dimensions,
+  Image,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -13,14 +15,15 @@ import TitleView from '@/components/Title';
 import { useState } from 'react';
 import { Price } from '@/components/home/Price';
 import ConfirmItem from '@/components/home/ConfirmItem';
-import TitleNew from "@/components/home/TitleNew";
-import Description from "@/components/home/Description";
-import Search from "@/components/home/Search";
+import TitleNew from '@/components/home/TitleNew';
+import Description from '@/components/home/Description';
+import Search from '@/components/home/Search';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function AddItemScreen() {
   const navigation = useNavigation();
-  const [arrPhoto, setArrPhoto] = useState(['', '', '', '']);
-  const [priceChange, setPriceChange] = useState('');
+  const [arrPhoto, setArrPhoto] = useState([]);
+  const [, setPriceChange] = useState('');
 
   const onPressGoBack = () => {
     navigation.goBack();
@@ -28,6 +31,22 @@ export default function AddItemScreen() {
 
   const onPressListItem = () => {
     navigation.goBack();
+  };
+
+  const pickImage = async index => {
+    if (index === arrPhoto.length) {
+      // No permissions request is necessary for launching the image library
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        setArrPhoto([...arrPhoto, result.assets[0].uri]);
+      }
+    }
   };
 
   const renderCamera = () => {
@@ -38,25 +57,34 @@ export default function AddItemScreen() {
           <TitleView text={'Photos'} />
 
           <View style={{ flexWrap: 'wrap', flexDirection: 'row' }}>
-            {arrPhoto.map((res: any, index: number) => {
+            {[...arrPhoto, ''].map((res: any, index: number) => {
+              console.log(res);
               return (
-                  <View
+                  <TouchableOpacity
+                      onPress={() => pickImage(index)}
                       key={index}
                       style={[
-                        styles.photos,
+                        res !== '' ? styles.photosSelected : styles.photos,
                         {
                           width: boxWidth / 3,
                           height: (boxWidth / 3) * 1.2,
                           marginRight: (index + 1) % 3 === 0 ? 0 : 25,
                         },
                       ]}>
-                    <EntypoIcons
-                        size={25}
-                        name={'circle-with-plus'}
-                        color={'#46C0EF'}
-                        style={styles.plusImage}
-                    />
-                  </View>
+                    {(res !== '' && (
+                        <Image
+                            source={{ uri: res }}
+                            style={{ height: '100%', width: '100%' }}
+                        />
+                    )) || (
+                        <EntypoIcons
+                            size={25}
+                            name={'circle-with-plus'}
+                            color={'#46C0EF'}
+                            style={styles.plusImage}
+                        />
+                    )}
+                  </TouchableOpacity>
               );
             })}
           </View>
@@ -92,7 +120,7 @@ export default function AddItemScreen() {
             <TouchableOpacity onPress={onPressGoBack}>
               <Ionicons size={50} name={'close'} color={'#46C0EF'} />
             </TouchableOpacity>
-            <View style={styles.headerLine}/>
+            <View style={styles.headerLine} />
           </View>
 
           {renderCamera()}
@@ -134,10 +162,16 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: '#A3E6FF',
   },
+  photosSelected: {
+    backgroundColor: '#EBF9FF',
+    marginTop: 20,
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
   plusImage: {
     position: 'absolute',
-    bottom: -2,
-    right: -2,
+    bottom: 0,
+    right: 0,
     height: 22,
     width: 22,
   },
@@ -158,5 +192,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingHorizontal: 15,
   },
-  headerLine: {position: 'absolute', left:0, right: 0, bottom: 0 , height: 2, backgroundColor: '#46C0EF'}
+  headerLine: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: 2,
+    backgroundColor: '#46C0EF',
+  },
 });
