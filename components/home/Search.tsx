@@ -7,12 +7,17 @@ const Search = () => {
     const allTabs = ['New', 'Used', 'Not Specified'];
 
     const [selectedValue, setSelectedValue] = useState('Not Specified');
-    const [sliderValue, setSliderValue] = useState(0.2)
+    const [sliderValue, setSliderValue] = useState(0.2);
 
-    const [switches] = useState([
+    const [switches, setSwitches] = useState([
         { title: 'Allow Local Pickup', enabled: true },
         { title: 'Allow On All Categories', enabled: true },
     ]);
+
+    const onChangeSwitch = (value: any, index?: any) => {
+        switches[index].enabled = value;
+        setSwitches([...switches]);
+    };
 
     return (
         <View style={styles.boxView}>
@@ -26,8 +31,9 @@ const Search = () => {
                             <Switch
                                 trackColor={{ true: '#9DDAF0' }}
                                 thumbColor={item.enabled ? '#3FBFEF' : '#fff'}
-                                ios_backgroundColor="#3e3e3e"
+                                ios_backgroundColor="#BFBFBF"
                                 value={item.enabled}
+                                onValueChange={value => onChangeSwitch(value, index)}
                             />
                         </View>
                     );
@@ -35,11 +41,13 @@ const Search = () => {
 
                 <View style={[styles.switchBox, { marginTop: 10 }]}>
                     <Text style={styles.switchText}>{'Maximum Distance'}</Text>
-                    <Text style={styles.totalText}>{`${parseInt(String(sliderValue * 100))}mi.`}</Text>
+                    <Text style={styles.totalText}>{`${parseInt(
+                        String(sliderValue * 100),
+                    )}mi.`}</Text>
                 </View>
 
                 <Slider
-                    style={{width: '100%', height: 40}}
+                    style={{ width: '100%', height: 40 }}
                     minimumValue={0}
                     maximumValue={1}
                     value={sliderValue}

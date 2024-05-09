@@ -1,13 +1,18 @@
-import React from 'react';
-import { TextInput, View, StyleSheet } from 'react-native';
+import React, { useRef } from 'react';
+import { TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
 import TitleView from '@/components/Title';
 
 const TitleNew = () => {
+    const textRef = useRef<any>(null);
+
     return (
         <>
             <View style={styles.boxView}>
-                <TitleView text={'Title'} icon={'pen'} />
+                <TouchableOpacity onPress={() => textRef.current.focus()}>
+                    <TitleView text={'Title'} icon={'pen'} />
+                </TouchableOpacity>
                 <TextInput
+                    ref={textRef}
                     style={styles.input}
                     placeholder={'Tap here to add a title'}
                     placeholderTextColor={'#8D8D8D'}
