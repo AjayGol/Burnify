@@ -7,9 +7,11 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FontAwesomeIcons from '@expo/vector-icons/FontAwesome';
+import {useState} from "react";
 
 export default function HomeScreen() {
     const navigation = useNavigation();
+    const [selectedTab, setSelectedTab] = useState(0);
     const data = [
         {
             heading: 'PlayStation Remote Player',
@@ -19,6 +21,7 @@ export default function HomeScreen() {
             title1: 'Open Chats',
             messageRequests: '6',
             title2: 'Message Requests',
+            isStatus: 0
         },
         {
             heading: 'PlayStation Remote Player22',
@@ -28,6 +31,7 @@ export default function HomeScreen() {
             title1: 'Open Chats2',
             messageRequests: '6',
             title2: 'Message 2',
+            isStatus: 0
         },
         {
             heading: 'PlayStation 333',
@@ -37,6 +41,7 @@ export default function HomeScreen() {
             title1: 'Open Chats2',
             messageRequests: '60',
             title2: 'Message 2',
+            isStatus: 1
         },
         {
             heading: 'PlayStation Remote Player',
@@ -46,6 +51,7 @@ export default function HomeScreen() {
             title1: 'Open Chats',
             messageRequests: '6',
             title2: 'Message Requests',
+            isStatus: 1
         },
         {
             heading: 'PlayStation Remote Player22',
@@ -55,6 +61,7 @@ export default function HomeScreen() {
             title1: 'Open Chats2',
             messageRequests: '6',
             title2: 'Message 55',
+            isStatus: 1
         },
         {
             heading: 'Last Data',
@@ -64,8 +71,27 @@ export default function HomeScreen() {
             title1: 'Open Chats2',
             messageRequests: '60',
             title2: 'Message 60',
+            isStatus: 2
         },
     ];
+
+    const filterArr = () => {
+        return data.filter(obj => obj.isStatus === selectedTab)
+    }
+
+    const manageTitle = () => {
+        switch (selectedTab){
+            case 0:
+                return 'Active Listings';
+            case 1:
+                return 'Tasks Listings';
+            case 2:
+                return 'Previous Listings';
+            default:
+                return ''
+        }
+    }
+
     const ListItem = () => {
         navigation.navigate('add-item');
     };
@@ -75,14 +101,15 @@ export default function HomeScreen() {
             <View style={styles.listBody} key={index}>
                 <View style={styles.listImages} />
 
-                <View style={{ flexDirection: 'column' }}>
+                <View style={{ flexDirection: 'column'}}>
                     <Text style={styles.listBodyHeading}>{item?.heading}</Text>
                     <Text style={styles.listBodyPrice}>
                         {item?.price}
                         <Text style={styles.listBodyDesc}> {item?.desc}</Text>
                     </Text>
 
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={styles.fullScreen}/>
+                    <View style={styles.openChatContainer}>
                         <View style={styles.numberContainer}>
                             <Text style={styles.listBodyNumber}>{item?.number}</Text>
                             <Text>{item?.title1}</Text>
@@ -118,29 +145,31 @@ export default function HomeScreen() {
             {/* Tab Design */}
 
             <View style={styles.tabView}>
-                <View style={styles.tabContainer}>
+                <TouchableOpacity style={styles.tabContainer} onPress={() => setSelectedTab(0)}>
                     <Text style={styles.tabTextMain}>9</Text>
                     <Text style={styles.tabTextName}>Active</Text>
-                    <View style={styles.tabLine} />
-                </View>
+                    {selectedTab === 0 ? <View style={styles.tabLine} /> : null}
+                </TouchableOpacity>
 
-                <View style={styles.tabContainer}>
+
+                <TouchableOpacity style={styles.tabContainer} onPress={() => setSelectedTab(1)}>
                     <Text style={styles.tabTextMain}>9</Text>
                     <Text style={styles.tabTextName}>Tasks</Text>
-                    <View style={styles.tabLine} />
-                </View>
+                    {selectedTab === 1 ? <View style={styles.tabLine} /> : null}
+                </TouchableOpacity>
 
-                <View style={styles.tabContainer}>
+
+                <TouchableOpacity style={styles.tabContainer} onPress={() => setSelectedTab(2)}>
                     <Text style={styles.tabTextMain}>9</Text>
                     <Text style={styles.tabTextName}>Previous</Text>
-                    <View style={styles.tabLine} />
-                </View>
+                    {selectedTab === 2 ? <View style={styles.tabLine} /> : null}
+                </TouchableOpacity>
             </View>
 
             {/* Heading Design for Active Listing */}
             <View style={styles.activeContainer}>
                 <View style={styles.activeHeader}>
-                    <Text style={styles.activeLabel}>Active Listings</Text>
+                    <Text style={styles.activeLabel}>{manageTitle()}</Text>
                     <View style={{ flex: 1 }} />
                     <View style={styles.filterContainer}>
                         <Text style={styles.filterText}>Filter</Text>
@@ -151,7 +180,7 @@ export default function HomeScreen() {
 
                 <View style={styles.listingBody}>
                     <FlatList
-                        data={data}
+                        data={filterArr()}
                         showsVerticalScrollIndicator={false}
                         renderItem={renderItem}
                         ListFooterComponent={<View style={{ height: 100 }} />}
@@ -168,6 +197,7 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+    fullScreen: {flex: 1},
     mainContainer: {
         flex: 1,
         backgroundColor: '#E8E8E8',
@@ -305,4 +335,5 @@ const styles = StyleSheet.create({
         height: 2,
         marginHorizontal: 16,
     },
+    openChatContainer: {flexDirection: 'row', marginBottom: 5}
 });
