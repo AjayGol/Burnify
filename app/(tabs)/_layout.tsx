@@ -19,7 +19,7 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={require('@/assets/images/icon-home.png')} focus={focused} />
+            <TabBarIcon name={'Home'} focus={focused} />
           ),
         }}
       />
@@ -28,7 +28,7 @@ export default function TabLayout() {
             options={{
                 title: 'Buying',
                 tabBarIcon: ({ color, focused }) => (
-                    <TabBarIcon name={require('@/assets/images/icon-buying.png')} focus={focused} />
+                    <TabBarIcon name={'Buying'} focus={focused} />
                 ),
             }}
         />
@@ -37,7 +37,7 @@ export default function TabLayout() {
             options={{
                 title: 'Selling',
                 tabBarIcon: ({ color, focused }) => (
-                    <TabBarIcon name={require('@/assets/images/icon-selling.png')} focus={focused} />
+                    <TabBarIcon name={'Selling'} focus={focused} />
                 ),
             }}
         />
@@ -46,7 +46,7 @@ export default function TabLayout() {
             options={{
                 title: 'Message',
                 tabBarIcon: ({ color, focused }) => (
-                    <TabBarIcon name={require('@/assets/images/icon-message.png')} focus={focused} />
+                    <TabBarIcon name={'message'} focus={focused} />
                 ),
             }}
         />
