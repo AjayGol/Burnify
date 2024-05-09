@@ -1,18 +1,23 @@
-import {Image, StyleSheet, Platform, View, TouchableOpacity, Text, SafeAreaView} from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  SafeAreaView,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
 
 export default function HomeScreen() {
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView>
-        <TouchableOpacity onPress={() =>{
-          navigation.navigate('add-item');
-        }}>
-            <Text> {'dfdsfsdfdsfsddsfds3333'}</Text>
+      <SafeAreaView>
+        <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('add-item');
+            }}>
+          <Text> {'dfdsfsdfdsfsddsfds3333'}</Text>
         </TouchableOpacity>
-    </SafeAreaView>
+      </SafeAreaView>
   );
 }
 
