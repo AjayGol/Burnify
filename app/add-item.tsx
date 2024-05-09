@@ -92,6 +92,7 @@ export default function AddItemScreen() {
             <TouchableOpacity onPress={onPressGoBack}>
               <Ionicons size={50} name={'close'} color={'#46C0EF'} />
             </TouchableOpacity>
+            <View style={styles.headerLine}/>
           </View>
 
           {renderCamera()}
@@ -157,4 +158,5 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingHorizontal: 15,
   },
+  headerLine: {position: 'absolute', left:0, right: 0, bottom: 0 , height: 2, backgroundColor: '#46C0EF'}
 });

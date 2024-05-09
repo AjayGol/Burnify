@@ -1,5 +1,7 @@
 import {
+    Dimensions,
     FlatList,
+    Image,
     StyleSheet,
     Text,
     TouchableOpacity,
@@ -7,11 +9,13 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FontAwesomeIcons from '@expo/vector-icons/FontAwesome';
-import {useState} from "react";
+import { useState } from 'react';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function HomeScreen() {
     const navigation = useNavigation();
     const [selectedTab, setSelectedTab] = useState(0);
+    const boxWidth = Dimensions.get('window').width;
     const data = [
         {
             heading: 'PlayStation Remote Player',
@@ -21,7 +25,7 @@ export default function HomeScreen() {
             title1: 'Open Chats',
             messageRequests: '6',
             title2: 'Message Requests',
-            isStatus: 0
+            isStatus: 0,
         },
         {
             heading: 'PlayStation Remote Player22',
@@ -31,7 +35,7 @@ export default function HomeScreen() {
             title1: 'Open Chats2',
             messageRequests: '6',
             title2: 'Message 2',
-            isStatus: 0
+            isStatus: 0,
         },
         {
             heading: 'PlayStation 333',
@@ -41,7 +45,7 @@ export default function HomeScreen() {
             title1: 'Open Chats2',
             messageRequests: '60',
             title2: 'Message 2',
-            isStatus: 1
+            isStatus: 1,
         },
         {
             heading: 'PlayStation Remote Player',
@@ -51,7 +55,7 @@ export default function HomeScreen() {
             title1: 'Open Chats',
             messageRequests: '6',
             title2: 'Message Requests',
-            isStatus: 1
+            isStatus: 1,
         },
         {
             heading: 'PlayStation Remote Player22',
@@ -61,7 +65,7 @@ export default function HomeScreen() {
             title1: 'Open Chats2',
             messageRequests: '6',
             title2: 'Message 55',
-            isStatus: 1
+            isStatus: 1,
         },
         {
             heading: 'Last Data',
@@ -71,16 +75,16 @@ export default function HomeScreen() {
             title1: 'Open Chats2',
             messageRequests: '60',
             title2: 'Message 60',
-            isStatus: 2
+            isStatus: 2,
         },
     ];
 
     const filterArr = () => {
-        return data.filter(obj => obj.isStatus === selectedTab)
-    }
+        return data.filter(obj => obj.isStatus === selectedTab);
+    };
 
     const manageTitle = () => {
-        switch (selectedTab){
+        switch (selectedTab) {
             case 0:
                 return 'Active Listings';
             case 1:
@@ -88,9 +92,9 @@ export default function HomeScreen() {
             case 2:
                 return 'Previous Listings';
             default:
-                return ''
+                return '';
         }
-    }
+    };
 
     const ListItem = () => {
         navigation.navigate('add-item');
@@ -101,14 +105,14 @@ export default function HomeScreen() {
             <View style={styles.listBody} key={index}>
                 <View style={styles.listImages} />
 
-                <View style={{ flexDirection: 'column'}}>
+                <View style={{ flexDirection: 'column' }}>
                     <Text style={styles.listBodyHeading}>{item?.heading}</Text>
                     <Text style={styles.listBodyPrice}>
                         {item?.price}
                         <Text style={styles.listBodyDesc}> {item?.desc}</Text>
                     </Text>
 
-                    <View style={styles.fullScreen}/>
+                    <View style={styles.fullScreen} />
                     <View style={styles.openChatContainer}>
                         <View style={styles.numberContainer}>
                             <Text style={styles.listBodyNumber}>{item?.number}</Text>
@@ -135,31 +139,55 @@ export default function HomeScreen() {
 
     return (
         <View style={styles.mainContainer}>
-            {/* Button Design */}
-            <TouchableOpacity style={styles.listItemSub} onPress={ListItem}>
-                <View style={styles.listItemButton}>
-                    <Text style={styles.listItemFont}>List an item</Text>
+            <LinearGradient
+                colors={['#26BCF2', '#82DAF9']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 0, y: 1 }}
+                style={styles.gradientHeader}>
+                <View style={{ alignItems: 'center', paddingBottom: 10 }}>
+                    <Image source={require('@/assets/images/home-logo.png')} />
                 </View>
-            </TouchableOpacity>
+            </LinearGradient>
+            {/* Button Design */}
+            {/*<TouchableOpacity style={styles.listItemSub} onPress={ListItem}>*/}
+            {/*    <View style={styles.listItemButton}>*/}
+            {/*        <Text style={styles.listItemFont}>List an item</Text>*/}
+            {/*    </View>*/}
+            {/*</TouchableOpacity>*/}
 
+            <TouchableOpacity style={styles.touchableOpacity} onPress={ListItem}>
+                <LinearGradient
+                    colors={['#26BCF2', '#82DAF9']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 0, y: 1 }}
+                    style={styles.gradient}>
+                    <View style={styles.listItemButton}>
+                        <Text style={styles.listItemFont}>List an item</Text>
+                    </View>
+                </LinearGradient>
+            </TouchableOpacity>
             {/* Tab Design */}
 
             <View style={styles.tabView}>
-                <TouchableOpacity style={styles.tabContainer} onPress={() => setSelectedTab(0)}>
+                <TouchableOpacity
+                    style={styles.tabContainer}
+                    onPress={() => setSelectedTab(0)}>
                     <Text style={styles.tabTextMain}>9</Text>
                     <Text style={styles.tabTextName}>Active</Text>
                     {selectedTab === 0 ? <View style={styles.tabLine} /> : null}
                 </TouchableOpacity>
 
-
-                <TouchableOpacity style={styles.tabContainer} onPress={() => setSelectedTab(1)}>
+                <TouchableOpacity
+                    style={styles.tabContainer}
+                    onPress={() => setSelectedTab(1)}>
                     <Text style={styles.tabTextMain}>9</Text>
                     <Text style={styles.tabTextName}>Tasks</Text>
                     {selectedTab === 1 ? <View style={styles.tabLine} /> : null}
                 </TouchableOpacity>
 
-
-                <TouchableOpacity style={styles.tabContainer} onPress={() => setSelectedTab(2)}>
+                <TouchableOpacity
+                    style={styles.tabContainer}
+                    onPress={() => setSelectedTab(2)}>
                     <Text style={styles.tabTextMain}>9</Text>
                     <Text style={styles.tabTextName}>Previous</Text>
                     {selectedTab === 2 ? <View style={styles.tabLine} /> : null}
@@ -197,15 +225,13 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-    fullScreen: {flex: 1},
+    fullScreen: { flex: 1 },
     mainContainer: {
         flex: 1,
         backgroundColor: '#E8E8E8',
         marginTop: 50,
     },
     listItemButton: {
-        backgroundColor: '#26BCF2',
-        marginTop: 14,
         borderRadius: 12,
         alignItems: 'center',
         justifyContent: 'center',
@@ -335,5 +361,17 @@ const styles = StyleSheet.create({
         height: 2,
         marginHorizontal: 16,
     },
-    openChatContainer: {flexDirection: 'row', marginBottom: 5}
+    openChatContainer: { flexDirection: 'row', marginBottom: 5 },
+    touchableOpacity: {
+        alignItems: 'center',
+    },
+    gradient: {
+        borderRadius: 10,
+        overflow: 'hidden',
+        marginTop: 14,
+    },
+    gradientHeader: {
+        paddingTop: 30,
+        overflow: 'hidden',
+    },
 });
