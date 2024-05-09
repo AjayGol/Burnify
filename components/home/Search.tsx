@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, Switch, TouchableOpacity } from 'react-native';
 import TitleView from '@/components/Title';
+import Slider from '@react-native-community/slider';
 
 const Search = () => {
     const allTabs = ['New', 'Used', 'Not Specified'];
 
     const [selectedValue, setSelectedValue] = useState('Not Specified');
+    const [sliderValue, setSliderValue] = useState(0.2)
 
     const [switches] = useState([
         { title: 'Allow Local Pickup', enabled: true },
@@ -33,14 +35,19 @@ const Search = () => {
 
                 <View style={[styles.switchBox, { marginTop: 10 }]}>
                     <Text style={styles.switchText}>{'Maximum Distance'}</Text>
-                    <Text style={styles.totalText}>{'20mi.'}</Text>
+                    <Text style={styles.totalText}>{`${parseInt(String(sliderValue * 100))}mi.`}</Text>
                 </View>
 
-                <View style={styles.sliderView}>
-                    <View style={styles.SliderLineMain} />
-                    <View style={styles.sliderLine} />
-                    <View style={styles.sliderDot} />
-                </View>
+                <Slider
+                    style={{width: '100%', height: 40}}
+                    minimumValue={0}
+                    maximumValue={1}
+                    value={sliderValue}
+                    onValueChange={setSliderValue}
+                    minimumTrackTintColor="#3FBFEF"
+                    maximumTrackTintColor="#E8E8E8"
+                    thumbTintColor={'#3FBFEF'}
+                />
 
                 <View style={{ marginTop: 10 }}>
                     <Text style={styles.switchText}>{'Condition'}</Text>
@@ -93,18 +100,6 @@ const styles = StyleSheet.create({
         color: '#949494',
         fontSize: 18,
     },
-    sliderView: { marginVertical: 20, position: 'relative' },
-    sliderDot: {
-        position: 'absolute',
-        top: -11,
-        bottom: 0,
-        left: '30%',
-        right: 0,
-        height: 22,
-        width: 22,
-        backgroundColor: '#3FBFEF',
-        borderRadius: 11,
-    },
     tabsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -119,24 +114,6 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         fontSize: 18,
-    },
-    sliderLine: {
-        backgroundColor: '#E8E8E8',
-        height: 3,
-        position: 'absolute',
-        left: '30%',
-        right: 0,
-        bottom: 0,
-        top: 0,
-    },
-    SliderLineMain: {
-        backgroundColor: '#3FBFEF',
-        height: 3,
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 0,
-        top: 0,
     },
 });
 
