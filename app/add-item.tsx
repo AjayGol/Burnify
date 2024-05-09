@@ -1,8 +1,8 @@
 import {
   Dimensions,
-  Image,
   StyleSheet,
-  Text, TextInput,
+  Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -11,12 +11,19 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import EntypoIcons from '@expo/vector-icons/Entypo';
 import TitleView from '@/components/Title';
 import { useState } from 'react';
+import { Price } from '@/components/home/Price';
+import ConfirmItem from '@/components/home/ConfirmItem';
 
 export default function AddItemScreen() {
   const navigation = useNavigation();
   const [arrPhoto, setArrPhoto] = useState(['', '', '', '']);
+  const [priceChange, setPriceChange] = useState('');
 
   const onPressGoBack = () => {
+    navigation.goBack();
+  };
+
+  const onPressListItem = () => {
     navigation.goBack();
   };
 
@@ -31,6 +38,7 @@ export default function AddItemScreen() {
             {arrPhoto.map((res: any, index: number) => {
               return (
                   <View
+                      key={index}
                       style={[
                         styles.photos,
                         {
@@ -39,8 +47,12 @@ export default function AddItemScreen() {
                           marginRight: (index + 1) % 3 === 0 ? 0 : 25,
                         },
                       ]}>
-                    <EntypoIcons size={25} name={'circle-with-plus'} color={'#46C0EF'}
-                                 style={styles.plusImage}/>
+                    <EntypoIcons
+                        size={25}
+                        name={'circle-with-plus'}
+                        color={'#46C0EF'}
+                        style={styles.plusImage}
+                    />
                   </View>
               );
             })}
@@ -49,15 +61,17 @@ export default function AddItemScreen() {
     );
   };
 
-  const renderPrice = () => {
-    const boxWidth = Dimensions.get('window').width - 110;
-
+  const renderCategory = () => {
     return (
         <View style={styles.boxContainer}>
-          <TitleView text={'Price'} />
+          <TitleView text={'Category'} />
 
           <View style={styles.textInput}>
-          <TextInput style={{flex: 1}} placeholder={"Search category filters"}/>
+            <TextInput
+                style={{ flex: 1 }}
+                placeholder={'Search category filters'}
+                onChangeText={setPriceChange}
+            />
           </View>
         </View>
     );
@@ -78,7 +92,9 @@ export default function AddItemScreen() {
           </View>
 
           {renderCamera()}
-          {renderPrice()}
+          {renderCategory()}
+          <Price />
+          <ConfirmItem onPressListItem={onPressListItem} />
         </View>
       </>
   );
@@ -91,6 +107,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
   },
+  flexDirectionRow: { flexDirection: 'row' },
   boxContainer: {
     margin: 10,
     backgroundColor: '#FFF',
@@ -126,5 +143,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  textInput: {width: '100%', height: 36, backgroundColor: '#F2F2F7', borderRadius: 10,marginTop: 10, paddingHorizontal: 15}
+  textInput: {
+    width: '100%',
+    height: 36,
+    backgroundColor: '#F2F2F7',
+    borderRadius: 10,
+    marginTop: 10,
+    paddingHorizontal: 15,
+  },
 });
