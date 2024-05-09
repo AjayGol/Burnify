@@ -2,12 +2,13 @@ import {
   Dimensions,
   Image,
   StyleSheet,
-  Text,
+  Text, TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import EntypoIcons from '@expo/vector-icons/Entypo';
 import TitleView from '@/components/Title';
 import { useState } from 'react';
 
@@ -38,13 +39,25 @@ export default function AddItemScreen() {
                           marginRight: (index + 1) % 3 === 0 ? 0 : 25,
                         },
                       ]}>
-                    <Image
-                        source={require('@/assets/images/icon-add.png')}
-                        style={styles.plusImage}
-                    />
+                    <EntypoIcons size={25} name={'circle-with-plus'} color={'#46C0EF'}
+                                 style={styles.plusImage}/>
                   </View>
               );
             })}
+          </View>
+        </View>
+    );
+  };
+
+  const renderPrice = () => {
+    const boxWidth = Dimensions.get('window').width - 110;
+
+    return (
+        <View style={styles.boxContainer}>
+          <TitleView text={'Price'} />
+
+          <View style={styles.textInput}>
+          <TextInput style={{flex: 1}} placeholder={"Search category filters"}/>
           </View>
         </View>
     );
@@ -65,6 +78,7 @@ export default function AddItemScreen() {
           </View>
 
           {renderCamera()}
+          {renderPrice()}
         </View>
       </>
   );
@@ -98,8 +112,8 @@ const styles = StyleSheet.create({
   },
   plusImage: {
     position: 'absolute',
-    bottom: -8,
-    right: -8,
+    bottom: -2,
+    right: -2,
     height: 22,
     width: 22,
   },
@@ -112,4 +126,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  textInput: {width: '100%', height: 36, backgroundColor: '#F2F2F7', borderRadius: 10,marginTop: 10, paddingHorizontal: 15}
 });

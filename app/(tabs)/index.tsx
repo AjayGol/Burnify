@@ -1,41 +1,282 @@
 import {
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  SafeAreaView,
+    FlatList,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from "@react-navigation/native";
+import FontAwesomeIcons from '@expo/vector-icons/FontAwesome'
 
 export default function HomeScreen() {
-  const navigation = useNavigation();
+    const navigation = useNavigation();
+    const data = [
+        {
+            heading: 'PlayStation Remote Player',
+            price: '$140',
+            desc: 'or best offer',
+            number: '6',
+            title1: 'Open Chats',
+            messageRequests: '6',
+            title2: 'Message Requests',
+        },
+        {
+            heading: 'PlayStation Remote Player22',
+            price: '$140',
+            desc: 'or best offer2',
+            number: '6',
+            title1: 'Open Chats2',
+            messageRequests: '6',
+            title2: 'Message 2',
+        },
+        {
+            heading: 'PlayStation 333',
+            price: '$140',
+            desc: 'or 333',
+            number: '80',
+            title1: 'Open Chats2',
+            messageRequests: '60',
+            title2: 'Message 2',
+        },
+        {
+            heading: 'PlayStation Remote Player',
+            price: '$140',
+            desc: 'or best offer',
+            number: '6',
+            title1: 'Open Chats',
+            messageRequests: '6',
+            title2: 'Message Requests',
+        },
+        {
+            heading: 'PlayStation Remote Player22',
+            price: '$140',
+            desc: 'or best offer2',
+            number: '6',
+            title1: 'Open Chats2',
+            messageRequests: '6',
+            title2: 'Message 55',
+        },
+        {
+            heading: 'Last Data',
+            price: '$140',
+            desc: 'or End',
+            number: '80',
+            title1: 'Open Chats2',
+            messageRequests: '60',
+            title2: 'Message 60',
+        },
+    ];
+    const ListItem = () => {
+        navigation.navigate('add-item');
+    };
 
-  return (
-      <SafeAreaView>
-        <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('add-item');
-            }}>
-          <Text> {'dfdsfsdfdsfsddsfds3333'}</Text>
-        </TouchableOpacity>
-      </SafeAreaView>
-  );
+    const renderItem = ({ item, index }) => {
+        return (
+            <View style={styles.listBody} key={index}>
+                <View style={styles.listImages} />
+
+                <View style={{ flexDirection: 'column' }}>
+                    <Text style={styles.listBodyHeading}>{item?.heading}</Text>
+                    <Text style={styles.listBodyDesc}>
+                        {item?.price} {item?.desc}
+                    </Text>
+
+                    <View style={{ flexDirection: 'row' }}>
+                        <View style={styles.numberContainer}>
+                            <Text style={styles.listBodyNumber}>{item?.number}</Text>
+                            <Text>{item?.title1}</Text>
+                        </View>
+
+                        <View style={styles.numberContainer}>
+                            <Text style={styles.listBodyNumber}>{item?.number}</Text>
+                            <Text>{item?.title2}</Text>
+                        </View>
+                    </View>
+                </View>
+
+                <View style={{ flex: 1 }} />
+                <FontAwesomeIcons size={25} name={'edit'} color={'#46C0EF'}/>
+                {/*<Image*/}
+                {/*    source={require('@/assets/images/icon-edit.png')}*/}
+                {/*    style={styles.editIcon}*/}
+                {/*/>*/}
+            </View>
+        );
+    };
+
+    return (
+        <View style={styles.mainContainer}>
+            <View>
+                {/* Button Design */}
+                <TouchableOpacity style={{ alignItems: 'center' }} onPress={ListItem}>
+                    <View style={styles.listItemButton}>
+                        <Text style={styles.listItemFont}>List an item</Text>
+                    </View>
+                </TouchableOpacity>
+
+                {/* Tab Design */}
+
+                <View style={styles.tabView}>
+                    <View style={styles.tabContainer}>
+                        <Text style={styles.tabTextMain}>9</Text>
+                        <Text style={styles.tabTextName}>Active</Text>
+                        <View style={styles.tabLine} />
+                    </View>
+
+                    <View style={styles.tabContainer}>
+                        <Text style={styles.tabTextMain}>9</Text>
+                        <Text style={styles.tabTextName}>Tasks</Text>
+                        <View style={styles.tabLine} />
+                    </View>
+
+                    <View style={styles.tabContainer}>
+                        <Text style={styles.tabTextMain}>9</Text>
+                        <Text style={styles.tabTextName}>Previous</Text>
+                        <View style={styles.tabLine} />
+                    </View>
+                </View>
+            </View>
+
+            {/* Heading Design for Active Listing */}
+            <View style={styles.activeContainer}>
+                <View style={styles.activeHeader}>
+                    <Text style={styles.activeLabel}>Active Listings</Text>
+                    <View style={{ flex: 1 }} />
+                    <View style={styles.filterContainer}>
+                        <Text style={styles.filterText}>Filter</Text>
+                    </View>
+                </View>
+
+                {/* body Design for Active Listing */}
+
+                <View style={styles.listingBody}>
+                    <FlatList
+                        data={data}
+                        showsVerticalScrollIndicator={false}
+                        renderItem={renderItem}
+                        ListFooterComponent={<View style={{height : 100}}/>}
+                    />
+                </View>
+            </View>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
+    mainContainer: {
+        flex: 1,
+        backgroundColor: '#B7B7B7',
+        marginTop: 50,
+    },
+    listItemButton: {
+        backgroundColor: '#26BCF2',
+        marginTop: 14,
+        borderRadius: 12,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    listItemFont: {
+        fontSize: 24,
+        paddingVertical: 8,
+        paddingHorizontal: 50,
+        fontWeight: '700',
+        color: '#FFFFFF',
+    },
+    tabView: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginHorizontal: 26,
+    },
+    tabContainer: {
+        marginBottom: 18,
+        alignItems: 'center',
+    },
+    tabTextMain: {
+        fontSize: 37,
+        color: '#2CBFF3',
+        fontWeight: '700',
+    },
+    tabTextName: {
+        fontSize: 16,
+        color: '#5C5C5C',
+        fontWeight: '600',
+    },
+    tabLine: {
+        height: 2,
+        width: 50,
+        backgroundColor: '#2BBEF3',
+        marginTop: 5,
+    },
+    activeContainer: {
+        flex: 1,
+        backgroundColor: 'white',
+        borderRadius: 21,
+        marginBottom : 5
+    },
+    activeHeader: {
+        flexDirection: 'row',
+        marginHorizontal: 21,
+        marginTop: 9,
+    },
+    activeLabel: {
+        fontSize: 26,
+        color: '#000000',
+        fontWeight: '500',
+    },
+    filterText: {
+        fontSize: 13,
+        color: '#46C0EF',
+        fontWeight: '400',
+        paddingHorizontal: 20,
+        paddingVertical: 7.5,
+    },
+    filterContainer: {
+        borderRadius: 20,
+        borderColor: '#46C0EF',
+        borderWidth: 1.5,
+    },
+    listingBody: {
+        marginTop: 15,
+        marginHorizontal: 21,
+    },
+    listBodyHeading: {
+        fontSize: 15,
+        color: '#000000',
+        fontWeight: '600',
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+    },
+    listBodyDesc: {
+        fontSize: 15,
+        color: '#000000',
+        fontWeight: '400',
+        paddingHorizontal: 10,
+        marginTop: -10,
+    },
+    listBodyNumber: {
+        fontSize: 20,
+        color: '#42BEED',
+        fontWeight: '600',
+        marginTop: -10,
+    },
+    editIcon: {
+        height: 20,
+        width: 20,
+        marginTop: 8,
+    },
+    numberContainer: {
+        marginTop: 16,
+        paddingHorizontal: 10,
+        alignItems: 'center',
+    },
+    listBody: {
+        flexDirection: 'row',
+        marginBottom: 20,
+    },
+    listImages: {
+        height: 110,
+        width: 84,
+        backgroundColor: '#000000',
+        borderRadius: 14,
+    },
 });
